@@ -1,0 +1,18 @@
+Bootstrap: docker
+From: alpine:latest
+
+%files
+    apps /apps
+
+%post
+    apk update
+    apk upgrade
+    apk add curl
+    apk add --no-cache python3 py3-pip
+
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+
+    cp /root/.local/bin/uv /usr/local/bin/uv
+    chmod +x /usr/local/bin/uv
+
+    chmod 777 /apps
