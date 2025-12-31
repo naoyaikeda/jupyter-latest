@@ -16,3 +16,7 @@ From: alpine:latest
     chmod +x /usr/local/bin/uv
 
     chmod 777 /apps
+    cd /apps
+
+    uv init
+    uv add jupyter notebook
