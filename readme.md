@@ -2,6 +2,7 @@
 
 Singularity イメージを作成するための Cookiecutter テンプレートです。
 Python、Jupyter Notebook、および最新の Python パッケージマネージャーである `uv` を含んだ環境を構築します。
+始まりがあって、終わりがあるジョブにはSingularityの方がDockerよりも適すると考えます。
 
 ## 特徴
 
