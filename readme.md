@@ -1,67 +1,55 @@
-# Jupyter Python Template
+# Jupyter Singularity Template
 
-Singularity を使用した Jupyter Notebook 実行環境です。
-[uv](https://github.com/astral.sh/uv) を使用して、高速かつ再現可能な Python パッケージ管理を実現しています。
+Singularity イメージを作成するための Cookiecutter テンプレートです。
+Python、Jupyter Notebook、および最新の Python パッケージマネージャーである `uv` を含んだ環境を構築します。
 
 ## 特徴
 
-- **Singularity/Apptainer**: ホスト OS を汚さず、ポータブルな実行環境を提供。
-- **uv**: Python パッケージのインストールと管理を高速化。
-- **Jupyter Notebook**: 最先端のデータ分析環境を即座に利用可能。
-{% if cookiecutter.rich_console == 'y' -%}
-- **Rich Console**: `starship` プロンプトを統合した、モダンで視認性の高いシェル環境。
-{%- endif %}
+- **Base Image**: Alpine latest
+- **Package Manager**: [uv](https://github.com/astral-sh/uv)
+- **Jupyter**: Jupyter Notebook がプリインストールされています。
+- **Optional**: Starship (Rich Console) の導入が可能です。
 
-## ディレクトリ構成
+## 必要要件
 
-- `apps/`: アプリケーションコードを配置します。ビルド時にコンテナ内の `/apps` にコピーされます。
-- `notebooks/`: Jupyter Notebook ファイル (`.ipynb`) を配置します。コンテナ起動時に `/apps/notebooks` にマウントされ、変更はホスト側に保存されます。
-- `image.def`: Singularity コンテナの構成（OS、パッケージ、環境変数など）を定義するファイル。
-- `makefile`: ビルドや実行を簡略化するためのコマンド集。
-- `container_bashrc`: (`rich_console` 有効時) コンテナ内でのシェル環境をカスタマイズするための設定ファイル。
+- [Singularity](https://apptainer.org/) (または Apptainer)
+- [Cookiecutter](https://github.com/cookiecutter/cookiecutter)
 
 ## 使い方
 
-### 1. イメージのビルド
+### プロジェクトの作成
 
-以下のコマンドを実行して、Singularity イメージ (`{{cookiecutter.package_name}}.sif`) をビルドします。
-※ ビルドには `sudo` 権限、または `fakeroot` が有効な環境が必要です。
-
-```bash
-make build
-```
-
-### 2. コンテナの起動
-
-ビルドしたイメージを使用して、コンテナ内のシェルを起動します。
+以下のコマンドを実行して、テンプレートからプロジェクトを作成してください。
 
 ```bash
-make run
+cookiecutter .
 ```
 
-### 3. Jupyter Notebook の起動
+### 設定項目
 
-コンテナ内（または `singularity exec` 経由）で以下のコマンドを実行します。
+プロンプトに従って以下の設定を入力します。
+
+- `package_name`: プロジェクトのディレクトリ名 (デフォルト: `jupyter-latest`)
+- `rich_console`: Starship プロンプトをインストールし、リッチなコンソールを使用するか (`y` or `n` / デフォルト: `N`)
+
+## 生成されるプロジェクト構成
+
+```text
+<package_name>/
+├── apps/          # アプリケーションコード (uv init済み)
+├── notebooks/     # Jupyter Notebook 保存用ディレクトリ
+├── image.def      # Singularity 定義ファイル
+├── makefile       # ビルド・実行用 Makefile
+├── readme.md      # プロジェクトドキュメント
+└── ...
+```
+
+## ビルドと実行
+
+生成されたプロジェクト内で `make` コマンドを使用できます。
 
 ```bash
-cd /apps
-uv run jupyter notebook --ip 0.0.0.0 --no-browser
+cd <package_name>
+make build  # Singularity イメージのビルド
+make run    # コンテナシェルの起動
 ```
-
-ターミナルに表示される URL (例: `http://127.0.0.1:8888/?token=...`) にブラウザからアクセスしてください。
-
-### 4. パッケージの追加・変更
-
-このプロジェクトでは、環境の再現性を保つためにイメージの再ビルドを推奨しています。
-
-1. `image.def` の `%post` セクションを編集し、`uv add` コマンドなどを追加します。
-2. 再度 `make build` を実行してイメージを更新します。
-
-## 開発のヒント
-
-- **データの永続化**: `notebooks/` ディレクトリ配下のファイルはホスト OS と共有されるため、コンテナを終了しても消えることはありません。
-- **カスタム設定**: `rich_console` が有効な場合、`container_bashrc` を編集することでコンテナ内のエイリアスなどをカスタマイズできます。
-
-## ライセンス
-
-[license.txt](license.txt) を参照してください。
