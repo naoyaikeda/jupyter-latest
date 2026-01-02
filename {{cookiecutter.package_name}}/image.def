@@ -9,6 +9,10 @@ From: alpine:latest
     apk upgrade
     apk add curl
     apk add git
+{% if cookiecutter.rich_console == 'y' %}
+    apk add bash
+    apk add --no-cache starship
+{% endif %}
     apk add --no-cache python3 py3-pip
 
     curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -21,3 +25,8 @@ From: alpine:latest
 
     uv init
     uv add jupyter notebook
+
+{% if cookiecutter.rich_console == 'y' %}
+%environment
+    export SHELL=/bin/bash
+{% endif %}

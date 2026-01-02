@@ -1,0 +1,25 @@
+import os
+import json
+
+RICH_CONSOLE = '{{ cookiecutter.rich_console }}'
+
+data = '''# Custom bashrc for Singularity container
+
+# プロンプトを変更してコンテナ内にいることを分かりやすくする
+export PS1="[Singularity] \\u@\\h:\\w$ "
+
+# エイリアスの設定 (必要に応じて追加してください)
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# その他の環境設定
+export TERM=xterm-256color
+
+eval "$(starship init bash)"'''
+
+if RICH_CONSOLE == 'y':
+
+    with open("container_bashrc", "w", encoding="utf-8") as f:
+        f.write(data)
+

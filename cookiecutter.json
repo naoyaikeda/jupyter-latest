@@ -1,3 +1,4 @@
 {
-    "package_name": "jupyter-latest"
+    "package_name": "jupyter-latest",
+    "rich_console": "N"
 }
