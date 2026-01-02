@@ -3,6 +3,12 @@
 Singularity を使用した Jupyter Notebook 実行環境です。
 [uv](https://github.com/astral.sh/uv) を使用して、高速かつ再現可能な Python パッケージ管理を実現しています。
 
+## 構成
+
+- **Base Image**: Alpine latest
+- **Package Manager**: [uv](https://github.com/astral-sh/uv)
+- **Interactive**: Jupyter Notebook / Shell
+
 ## 特徴
 
 - **Singularity/Apptainer**: ホスト OS を汚さず、ポータブルな実行環境を提供。
