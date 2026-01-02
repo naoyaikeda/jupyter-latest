@@ -1,4 +1,4 @@
-# {{cookiecutter.package_name}}
+# Jupyter Python Template
 
 Singularity を使用した Jupyter Notebook 実行環境です。
 [uv](https://github.com/astral.sh/uv) を使用して、高速かつ再現可能な Python パッケージ管理を実現しています。
