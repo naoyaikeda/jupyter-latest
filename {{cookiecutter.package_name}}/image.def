@@ -8,6 +8,7 @@ From: alpine:latest
     apk update
     apk upgrade
     apk add curl
+    apk add git
     apk add --no-cache python3 py3-pip
 
     curl -LsSf https://astral.sh/uv/install.sh | sh
